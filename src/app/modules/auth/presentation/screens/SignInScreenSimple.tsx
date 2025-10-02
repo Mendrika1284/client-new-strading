@@ -24,6 +24,7 @@ type SignInScreenProps = {
   errors: FieldErrors<SignInFormData>;
   message: string | null;
   onDemoLogin?: () => void;
+  onTempLogin?: () => void;
 };
 
 function SignInScreenSimple({
@@ -33,6 +34,7 @@ function SignInScreenSimple({
   errors,
   message,
   onDemoLogin,
+  onTempLogin,
 }: SignInScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -152,6 +154,18 @@ function SignInScreenSimple({
                 "Se connecter"
               )}
             </Button>
+
+            {/* Bouton de connexion temporaire */}
+            {onTempLogin && (
+              <Button
+                type="button"
+                onClick={onTempLogin}
+                disabled={isLoading}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 border-2 border-orange-300"
+              >
+                Connexion temporaire (Pour test client)
+              </Button>
+            )}
 
             {/* Lien vers l'inscription */}
             <div className="text-center">

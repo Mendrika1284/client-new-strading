@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -16,6 +17,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (credentials: AuthCredentials) => Promise<void>;
+  tempLogin: () => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   authInfos: User | null;
   tokenInfos: Token | null;
@@ -89,6 +91,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       throw error;
     }
   }, []);
+
+  const tempLogin = useCallback(async () => {
+    setIsLoading(true);
+    setMessage(null);
+
+    try {
+      // Simulation d'une connexion temporaire pour le développement
+      const user: User = {
+        id: "temp-user-id",
+        email: "dev@strading.com",
+        firstName: "Dev",
+        lastName: "User",
+      };
+
+      const token: Token = {
+        accessToken: "temp-access-token",
+        refreshToken: "temp-refresh-token",
+      };
+
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setAuthInfos(user);
+      setTokenInfos(token);
+      setMessage(null);
+      router.replace("/dashboard");
+    } catch (error) {
+      console.error("Erreur lors de la connexion temporaire :", error);
+      setMessage("Erreur lors de la connexion temporaire.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [router]);
 
   const login = useCallback(
     async (credentials: AuthCredentials) => {
@@ -266,6 +301,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user: authInfos,
         isLoading,
         login,
+        tempLogin,
         register,
         authInfos,
         setAuthInfos,

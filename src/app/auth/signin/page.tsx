@@ -10,7 +10,7 @@ interface SignInFormData {
 }
 
 export default function SignInPage() {
-  const { login, isLoading, message } = useAuth();
+  const { login, tempLogin, isLoading, message } = useAuth();
 
   const {
     register,
@@ -40,6 +40,14 @@ export default function SignInPage() {
     }
   };
 
+  const handleTempLogin = async () => {
+    try {
+      await tempLogin();
+    } catch (error) {
+      console.error("Erreur lors de la connexion temporaire:", error);
+    }
+  };
+
   return (
     <SignInScreenSimple
       isLoading={isLoading}
@@ -48,6 +56,7 @@ export default function SignInPage() {
       errors={errors}
       message={message}
       onDemoLogin={handleDemoLogin}
+      onTempLogin={handleTempLogin}
     />
   );
 }
