@@ -330,6 +330,7 @@ export default function PackagesPage() {
                 </button>
               </div>
             </div>
+          </div>
 
           {/* Bouton Créer un colis (seulement pour les petits colis) */}
           {activeTab === "small-packages" && (

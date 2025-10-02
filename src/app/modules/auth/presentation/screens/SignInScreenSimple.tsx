@@ -23,7 +23,6 @@ type SignInScreenProps = {
   register: UseFormRegister<SignInFormData>;
   errors: FieldErrors<SignInFormData>;
   message: string | null;
-  onDemoLogin?: () => void;
   onTempLogin?: () => void;
 };
 
@@ -33,7 +32,6 @@ function SignInScreenSimple({
   register,
   errors,
   message,
-  onDemoLogin,
   onTempLogin,
 }: SignInScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
